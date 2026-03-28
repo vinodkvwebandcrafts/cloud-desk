@@ -43,7 +43,7 @@ export function Header() {
     if (mobileSearchOpen) mobileInputRef.current?.focus();
   }, [mobileSearchOpen]);
 
-  const hasResults = debouncedQuery.length >= 3 && (isLoading || (results && results.length > 0));
+  const hasResults = debouncedQuery.length >= 1 && (isLoading || (results && results.length > 0));
   const selectedLang = LANGUAGES.find((l) => l.code === locale);
 
   function closeMobileSearch() {

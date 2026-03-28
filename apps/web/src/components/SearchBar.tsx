@@ -42,7 +42,7 @@ export function SearchBar({ variant = "hero" }: SearchBarProps) {
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
 
-  const showDropdown = isFocused && debouncedQuery.length >= 3 && (isLoading || (results && results.length > 0));
+  const showDropdown = isFocused && debouncedQuery.length >= 1 && (isLoading || (results && results.length > 0));
 
   function handleChipClick(label: string, searchKey: string) {
     if (activeChip === label) {

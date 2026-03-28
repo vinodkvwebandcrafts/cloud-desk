@@ -27,7 +27,7 @@ export function useSearch(query: string) {
   return useQuery<Article[]>({
     queryKey: ["search", query, locale],
     queryFn: () => apiFetch(`/api/articles/search?q=${encodeURIComponent(query)}&locale=${locale}`),
-    enabled: query.length >= 3,
+    enabled: query.length >= 1,
   });
 }
 

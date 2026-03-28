@@ -58,7 +58,9 @@ articlesRouter.get("/articles/search", async (req, res) => {
     const q = (req.query.q as string) || "";
     const locale = (req.query.locale as string) || "en";
 
-    if (q.length < 2) return res.json([]);
+    // CJK characters are meaningful at 1 char; latin needs at least 2
+    const isCJK = /[\u3000-\u9fff\uac00-\ud7af]/.test(q);
+    if (q.length < (isCJK ? 1 : 2)) return res.json([]);
 
     // Always search English content + translated content for the locale
     const orConditions: any[] = [
