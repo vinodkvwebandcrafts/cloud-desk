@@ -1,0 +1,92 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id           String                @id @default(uuid()) @db.Uuid
+  name         String
+  description  String?
+  icon         String?
+  createdAt    DateTime              @default(now()) @map("created_at")
+  articles     Article[]
+  translations CategoryTranslation[]
+
+  @@map("categories")
+}
+
+model CategoryTranslation {
+  id          String   @id @default(uuid()) @db.Uuid
+  categoryId  String   @map("category_id") @db.Uuid
+  locale      String
+  name        String
+  description String?
+  category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@unique([categoryId, locale])
+  @@map("category_translations")
+}
+
+model Article {
+  id           String                @id @default(uuid()) @db.Uuid
+  title        String
+  slug         String                @unique
+  content      String
+  categoryId   String                @map("category_id") @db.Uuid
+  readTime     Int                   @map("read_time")
+  isFeatured   Boolean               @default(false) @map("is_featured")
+  createdAt    DateTime              @default(now()) @map("created_at")
+  category     Category              @relation(fields: [categoryId], references: [id])
+  translations ArticleTranslation[]
+
+  @@index([categoryId])
+  @@index([slug])
+  @@map("articles")
+}
+
+model ArticleTranslation {
+  id        String  @id @default(uuid()) @db.Uuid
+  articleId String  @map("article_id") @db.Uuid
+  locale    String
+  title     String
+  content   String
+  article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+
+  @@unique([articleId, locale])
+  @@map("article_translations")
+}
+
+model Video {
+  id           String             @id @default(uuid()) @db.Uuid
+  title        String
+  duration     String
+  thumbnail    String?
+  videoUrl     String             @map("video_url")
+  createdAt    DateTime           @default(now()) @map("created_at")
+  translations VideoTranslation[]
+
+  @@map("videos")
+}
+
+model VideoTranslation {
+  id      String @id @default(uuid()) @db.Uuid
+  videoId String @map("video_id") @db.Uuid
+  locale  String
+  title   String
+  video   Video  @relation(fields: [videoId], references: [id], onDelete: Cascade)
+
+  @@unique([videoId, locale])
+  @@map("video_translations")
+}
+
+model SearchLog {
+  id        String   @id @default(uuid()) @db.Uuid
+  query     String
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("search_logs")
+}

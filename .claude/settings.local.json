@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm -v)",
+      "Bash(npx turbo:*)",
+      "Bash(npx prisma:*)",
+      "Bash(npx next:*)",
+      "Bash(pnpm install:*)",
+      "Bash(pnpm approve-builds:*)",
+      "Bash(npx create-next-app@latest apps/web --app --tailwind --typescript --eslint --src-dir --no-import-alias --use-pnpm --turbopack)",
+      "Bash(printf 'n\\\\nn\\\\n')",
+      "Bash(pnpm:*)",
+      "Bash(ls /c/Users/wac/Projects/learn/AI/Customer-Support/monorepo/apps/web/.env*)",
+      "Bash(timeout 8 npx tsx src/index.ts)",
+      "Bash(git rm:*)"
+    ]
+  }
+}
